@@ -1,5 +1,5 @@
 from flask_app import app
-from flask import render_template, redirect, flash, request, session
+from flask import render_template, redirect, flash, request, session, url_for
 from flask_app.models import usuario
 from flask_bcrypt import Bcrypt
 
@@ -29,3 +29,34 @@ def formRegistro():
         return redirect('/')
     else:
         return redirect('/')
+
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+    if request.method=='GET':
+        return redirect('/')
+    user = usuario.Usuario.get_by_email(request.form)
+    if not user:
+        flash('E-mail no registrado', 'email_login')
+        return redirect('/')
+    if not bcrypt.check_password_hash(user.password, request.form['password']):
+        flash('Constraseña incorrecta', 'pw_login')
+        return redirect('/')
+    session['user_id']=user.id
+    return redirect(url_for('pagUser'))
+
+@app.route('/user')
+def pagUser():
+    if 'user_id' not in session:
+        return redirect ('/')
+    datos={'id':session['user_id']}
+    user=usuario.Usuario.get_by_id(datos)
+    if not user:
+        session.clear()
+        return redirect ('/')
+    return render_template('user.html', user=user)
+
+@app.route('/logout', methods=['GET'])
+def logout():
+    session.clear()
+    flash('Sesión terminada', 'logout')
+    return redirect ('/')

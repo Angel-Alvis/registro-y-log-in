@@ -58,8 +58,18 @@ class Usuario:
 
     @classmethod
     def get_by_email(cls, datos):
-        query='''select email from usuarios where email=%(email)s'''
+        query='''select * from usuarios where email=%(email)s'''
         resultados=connectToMySQL('db_login').query_db(query, datos)
-        if len(resultados)<1:
-            return False
-        return True
+        if len(resultados)==1:
+            usuario=cls(resultados[0])
+            return usuario
+        return False
+    
+    @classmethod
+    def get_by_id(cls, datos):
+        query='''select * from usuarios where id=%(id)s'''
+        resultados=connectToMySQL('db_login').query_db(query, datos)
+        if len(resultados)==1:
+            usuario=cls(resultados[0])
+            return usuario
+        return False
