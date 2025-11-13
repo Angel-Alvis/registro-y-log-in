@@ -1,6 +1,6 @@
 from flask_app import app
 from flask import render_template, redirect, flash, request, session, url_for
-from flask_app.models import usuario
+from flask_app.models import usuario, mision
 from flask_bcrypt import Bcrypt
 
 bcrypt = Bcrypt(app)
@@ -41,19 +41,20 @@ def login():
     if not bcrypt.check_password_hash(user.password, request.form['password']):
         flash('Constraseña incorrecta', 'pw_login')
         return redirect('/')
-    session['user_id']=user.id
+    session['usuario_id']=user.id
     return redirect(url_for('pagUser'))
 
 @app.route('/user')
 def pagUser():
-    if 'user_id' not in session:
+    if 'usuario_id' not in session:
         return redirect ('/')
-    datos={'id':session['user_id']}
+    datos={'id':session['usuario_id']}
     user=usuario.Usuario.get_by_id(datos)
     if not user:
         session.clear()
         return redirect ('/')
-    return render_template('user.html', user=user)
+    misiones=mision.Mision.get_all_misiones()
+    return render_template('user.html', user=user, misiones=misiones)
 
 @app.route('/logout', methods=['GET'])
 def logout():

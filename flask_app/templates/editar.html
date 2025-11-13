@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Misión</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+</head>
+<body>
+    <nav>
+        <h1>Editar</h1>
+        <div class="barnav">
+            <a class='opt' href="{{url_for('pagUser')}}">Inicio</a>
+            <a class="opt" id="logout" href="{{url_for('logout')}}">Cerrar Sesión</a>
+        <div>
+    </nav>
+    <aside>
+        <form action="{{ url_for('formEditar', id=mision.id) }}" method="post">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre" value="{{mision.nombre}}">
+            <br>
+            <label for="fecha">Fecha:</label>
+            <input type="date" name="fecha" id="fecha" value="{{mision.fecha}}">
+            <br>
+            <label for="numero_voluntarios">Numero de Voluntarios:</label>
+            <input type="text" name="numero_voluntarios" id="numero_voluntarios" value="{{mision.numero_voluntarios}}">
+            <br>
+            <label for="descripcion">Descripción:</label>
+            <textarea name="descripcion" id="descripcion">{{mision.descripcion}}</textarea>
+            <br><br>
+            <button type="submit">Enviar</button>
+        </form>
+    </aside>
+</body>
+</html>

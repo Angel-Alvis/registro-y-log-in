@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Misión</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+</head>
+<body>
+    <nav>
+        <h1>{{mision.nombre}}</h1>
+        <div class="barnav">
+            <a class='opt' href="{{url_for('pagUser')}}">Inicio</a>
+            <a class="opt" id="logout" href="{{url_for('logout')}}">Cerrar Sesión</a>
+        <div>
+    </nav>
+    <aside>
+        <p>Lider: {{mision.usuario_nombre}}</p>
+        <p>Fecha: {{mision.fecha}}</p>
+        <p>Número de Voluntarios: {{mision.numero_voluntarios}}</p>
+        <p>Descripción: {{mision.descripcion}}</p>
+    </aside>
+</body>
+</html>

@@ -4,80 +4,86 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/inicio.css')}}">
 </head>
 <body>
-    <h3>Registro:</h3>
-    <form action="{{url_for('formRegistro')}}" method="post">
-        <label for="nombre">Nombre:</label>
-        <input type="text" name="nombre" id="nombre">
-        {% with mensajes = get_flashed_messages(category_filter=["nombre"]) %}
+    <h1>VoluntaMe</h1>
+    <aside>
+        <h2>Registro:</h2>
+        <form action="{{url_for('formRegistro')}}" method="post">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre">
+            {% with mensajes = get_flashed_messages(category_filter=["nombre"]) %}
+                {% if mensajes %}
+                <p style="color: red;">{{ mensajes[0] }}</p>
+                {% endif %}
+            {% endwith %}
+            <br>
+            <label for="apellido">Apellido:</label>
+            <input type="text" name="apellido" id="apellido">
+            {% with mensajes = get_flashed_messages(category_filter=["apellido"]) %}
+                {% if mensajes %}
+                <p style="color: red;">{{ mensajes[0] }}</p>
+                {% endif %}
+            {% endwith %}
+            <br>
+            <label for="email">E-mail:</label>
+            <input type="text" name="email" id="email">
+            {% with mensajes = get_flashed_messages(category_filter=["email"]) %}
+                {% if mensajes %}
+                    {%for mensaje in mensajes%}
+                        <p style="color: red;">{{ mensaje }}</p>
+                    {%endfor%}
+                {% endif %}
+            {% endwith %}
+            <br>
+            <label for="password">Contraseña:</label>
+            <input type="password" name="password" id="password">
+            <br>
+            <label for="confirm_pw">Confirmar Contraseña:</label>
+            <input type="password" name="confirm_pw" id="confirm_pw">
+            {% with mensajes = get_flashed_messages(category_filter=["pw"]) %}
+                {% if mensajes %}
+                    {%for mensaje in mensajes%}
+                        <p style="color: red;">{{ mensaje }}</p>
+                    {%endfor%}
+                {% endif %}
+            {% endwith %}
+            <br><br>
+            <button type="submit">Registrarse</button>
+        </form>
+        {% with mensajes = get_flashed_messages(category_filter=["registro"]) %}
+                {% if mensajes %}
+                <p style="color: red;">{{ mensajes[0] }}</p>
+                {% endif %}
+            {% endwith %}
+    </aside>
+    <aside>
+        <h2>Iniciar Sesión:</h2>
+        {% with mensajes = get_flashed_messages(category_filter=["logout"]) %}
             {% if mensajes %}
-             <p style="color: red;">{{ mensajes[0] }}</p>
+                <p style="color: red;">{{ mensajes[0] }}</p>
             {% endif %}
         {% endwith %}
-        <br>
-        <label for="apellido">Apellido:</label>
-        <input type="text" name="apellido" id="apellido">
-        {% with mensajes = get_flashed_messages(category_filter=["apellido"]) %}
-            {% if mensajes %}
-             <p style="color: red;">{{ mensajes[0] }}</p>
-            {% endif %}
-        {% endwith %}
-        <br>
-        <label for="email">E-mail:</label>
-        <input type="text" name="email" id="email">
-        {% with mensajes = get_flashed_messages(category_filter=["email"]) %}
-            {% if mensajes %}
-                {%for mensaje in mensajes%}
-                     <p style="color: red;">{{ mensaje }}</p>
-                {%endfor%}
-            {% endif %}
-        {% endwith %}
-        <br>
-        <label for="password">Contraseña:</label>
-        <input type="password" name="password" id="password">
-        <br>
-        <label for="confirm_pw">Confirmar Contraseña:</label>
-        <input type="password" name="confirm_pw" id="confirm_pw">
-        {% with mensajes = get_flashed_messages(category_filter=["pw"]) %}
-            {% if mensajes %}
-                {%for mensaje in mensajes%}
-                     <p style="color: red;">{{ mensaje }}</p>
-                {%endfor%}
-            {% endif %}
-        {% endwith %}
-        <br>
-        <button type="submit">Registrarse</button>
-    </form>
-    {% with mensajes = get_flashed_messages(category_filter=["registro"]) %}
-            {% if mensajes %}
-             <p style="color: red;">{{ mensajes[0] }}</p>
-            {% endif %}
-        {% endwith %}
-    <h3>Iniciar Sesión:</h3>
-    {% with mensajes = get_flashed_messages(category_filter=["logout"]) %}
-        {% if mensajes %}
-            <p style="color: red;">{{ mensajes[0] }}</p>
-        {% endif %}
-    {% endwith %}
-    <form action="{{url_for('login')}}" method="post">
-        <label for="email">E-mail:</label>
-        <input type="text" name="email" id="email">
-        {% with mensajes = get_flashed_messages(category_filter=["email_login"]) %}
-            {% if mensajes %}
-             <p style="color: red;">{{ mensajes[0] }}</p>
-            {% endif %}
-        {% endwith %}
-        <br>
-        <label for="password">Contraseña:</label>
-        <input type="password" name="password" id="password">
-        {% with mensajes = get_flashed_messages(category_filter=["pw_login"]) %}
-            {% if mensajes %}
-             <p style="color: red;">{{ mensajes[0] }}</p>
-            {% endif %}
-        {% endwith %}
-        <br>
-        <button type="submit">Ingresar</button>
-    </form>
+        <form action="{{url_for('login')}}" method="post">
+            <label for="email">E-mail:</label>
+            <input type="text" name="email" id="email">
+            {% with mensajes = get_flashed_messages(category_filter=["email_login"]) %}
+                {% if mensajes %}
+                <p style="color: red;">{{ mensajes[0] }}</p>
+                {% endif %}
+            {% endwith %}
+            <br>
+            <label for="password">Contraseña:</label>
+            <input type="password" name="password" id="password">
+            {% with mensajes = get_flashed_messages(category_filter=["pw_login"]) %}
+                {% if mensajes %}
+                <p style="color: red;">{{ mensajes[0] }}</p>
+                {% endif %}
+            {% endwith %}
+            <br><br>
+            <button type="submit">Ingresar</button>
+        </form>
+    </aside>
 </body>
 </html>

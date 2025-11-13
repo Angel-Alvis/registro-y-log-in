@@ -4,9 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{user.nombre}} {{user.apellido}}</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/user.css')}}">
+
 </head>
 <body>
-    <h2>Bienvenido, {{user.nombre}} {{user.apellido}}.</h2>
-    <a href="{{url_for('logout')}}">Cerrar Sesión</a>
+    <nav>
+        <h1>Bienvenido, {{user.nombre}} {{user.apellido}}.</h1>
+        <div class="barnav">
+            <a class="opt" href="{{url_for('pagCrearMision')}}">Nueva Misión</a>
+            <a class="opt" id="logout" href="{{url_for('logout')}}">Cerrar Sesión</a>
+        </div>
+    </nav>
+    {% if misiones|length == 0 %}
+        <p>No hay misiones</p>
+        {%else%}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Lider</th>
+                        <th>Fecha</th>
+                        <th>Voluntarios Necesarios</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mision in misiones %}
+                    <tr>
+                        <td>{{mision.nombre}}</td>
+                        <td>{{mision.usuario_nombre}}</td>
+                        <td>{{mision.fecha}}</td>
+                        <td>{{mision.numero_voluntarios}}</td>
+                        <td><div><a class="accion" href="{{url_for('verMision', id=mision.id)}}">Ver</a>
+                        {% if mision.usuario_id == user.id %}
+                            <br>
+                            <a class="accion" href="{{url_for('pagEditar', id=mision.id)}}">Editar</a>
+                            <br>
+                            <a class="accion" href="{{url_for('eliminar_mision', id=mision.id)}}">Borrar</a>
+                        {% endif %}
+                        </div></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    {% endif %}
 </body>
 </html>

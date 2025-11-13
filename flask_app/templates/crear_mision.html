@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Mision</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+</head>
+<body>
+    <nav>
+        <h1>Crear Misión</h1>
+        <div class="barnav">
+            <a class='opt' href="{{url_for('pagUser')}}">Inicio</a>
+            <a class="opt" id="logout" href="{{url_for('logout')}}">Cerrar Sesión</a>
+        <div>
+    </nav>
+    <aside>
+        <form action="{{url_for('formMision')}}" method="post">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre">
+            <br>
+            <label for="fecha">Fecha:</label>
+            <input type="date" name="fecha" id="fecha">
+            <br>
+            <label for="numero_voluntarios">Numero de Voluntarios:</label>
+            <input type="number" name="numero_voluntarios" id="numero_voluntarios">
+            <br>
+            <label for="descripcion">Descripción:</label>
+            <textarea name="descripcion" id="descripcion"></textarea>
+            <br>
+            <button type="submit">Guardar</button>
+        </form>
+    </aside>
+</body>
+</html>
